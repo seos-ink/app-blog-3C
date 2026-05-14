@@ -23,7 +23,7 @@ require_once '../../conn/conect.php';
 // foreach ($users as $user):
 //     echo $user['name'];
 // endforeach;
-// ?>
+// 
 
 include_once '../_inc/_header.php';
 ?>
