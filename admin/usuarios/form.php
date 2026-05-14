@@ -217,15 +217,15 @@ require_once '../../conn/conect.php';
 
                 <div class="row g-4 mb-4">
                     <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Nome Completo</label>
+                        <label class="form-label fw-bold small text-muted text-uppercase">Nome Completo *</label>
                         <input type="text" name="name" class="form-control form-control-flat" placeholder="Digite o nome" >
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">E-mail Principal</label>
+                        <label class="form-label fw-bold small text-muted text-uppercase">E-mail Principal *</label>
                         <input type="email" name="email" class="form-control form-control-flat" placeholder="exemplo@blog.com" >
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Nível de Permissão</label>
+                        <label class="form-label fw-bold small text-muted text-uppercase">Nível de Permissão *</label>
 
                         <select name="id_level_users" class="form-select form-control-flat">
                             <?php
@@ -254,15 +254,19 @@ require_once '../../conn/conect.php';
 
                 <div class="row g-4 mb-4">
                     <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Senha de Acesso</label>
+                        <label class="form-label fw-bold small text-muted text-uppercase">Senha de Acesso *</label>
                         <input type="password" name="password" class="form-control form-control-flat" placeholder="••••••••" >
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Confirmar Senha</label>
+                        <label class="form-label fw-bold small text-muted text-uppercase">Confirmar Senha *</label>
                         <input type="password" name="pass_confirm" class="form-control form-control-flat" placeholder="••••••••" >
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Status da Conta</label>
+                        <label class="form-label fw-bold small text-muted text-uppercase">Telefone *</label>
+                        <input type="tel" pattern="\(\d{2}\)\s\d{5}-\d{4}" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" class="form-control form-control-flat" placeholder="(12) 999999-9999">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Status da Conta *</label>
                         <div class="d-flex align-items-center h-100 mt-2">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="statusSwitch" name="status" checked>

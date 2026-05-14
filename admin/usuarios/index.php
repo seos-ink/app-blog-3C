@@ -217,6 +217,7 @@ include_once '../_inc/_header.php';
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Email</th>
+                        <th>Telefone</th>
                         <th>Status</th>
                         <th>Ações</th>
                     </tr>
@@ -225,12 +226,13 @@ include_once '../_inc/_header.php';
                     <?php
                     $stmt = $pdo->query("SELECT U.*, L.name AS level_name FROM users AS U
                                          INNER JOIN level_users AS L ON U.id_level_users = L.id
-                                         ORDER BY U.name ASC");
+                                         ORDER BY U.id ASC");
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         echo "<tr>";
                         echo "<td>" . htmlspecialchars($row['id']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['name']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['phone']) . "</td>";
                         echo "<td>" . ($row['status'] ? 'Ativo' : 'Inativo') . "</td>";
                         echo "<td><a href='form.php?id=" . $row['id'] . "' class='btn btn-sm btn-outline-primary'>Editar</a></td>";
                         echo "</tr>";
