@@ -266,6 +266,10 @@ require_once '../../conn/conect.php';
                         <input type="tel" pattern="\(\d{2}\)\s\d{5}-\d{4}" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" class="form-control form-control-flat" placeholder="(12) 999999-9999">
                     </div>
                     <div class="col-md-4">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Slug *</label>
+                        <input type="text" class="form-control form-control-flat" placeholder="Ex.: fulano-de-tal" name="slug">
+                    </div>                                    
+                    <div class="col-md-4">
                         <label class="form-label fw-bold small text-muted text-uppercase">Status da Conta *</label>
                         <div class="d-flex align-items-center h-100 mt-2">
                             <div class="form-check form-switch">
