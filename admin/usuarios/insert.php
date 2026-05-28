@@ -50,3 +50,28 @@ if($stmt->execute()) {
 } else {
 	header('Location: form.php?error=true');
 }
+
+/*
+$dir = "../../uploads/images/users";
+if (!is_dir($dir)) {
+	mkdir($dir, 0755, true);
+}
+
+if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+	$ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+	$basename = pathinfo($_FILES['image']['name'], PATHINFO_FILENAME);
+	$newname = $basename . '_'  . $ext;
+	$counter = 1;
+
+	while (file_exists($dir . '/' . $newname)) {
+		$newname = $basename . '_' . $counter . '.' . $ext;
+		$counter++;
+	}
+	
+	if(move_uploaded_file($_FILES['image']['tmp_name'], $dir . '/' . $newname)) {
+		$post['image'] = $newname;		
+	}
+} else { 
+	unset($post['image']);
+}
+*/

@@ -209,9 +209,9 @@ include_once '../_inc/_header.php';
         </div>
     </div>
 
-    <div class="card card-list" style="border-radius: 10px; border: 1px solid darkslategray; display: flex; ">
+    <div class="card card-list" style="border-radius: 10px; border: 1px solid darkslategray;">
         <div class="card-body p-4">
-            <table class="table table-hover" style="width: 100%; border-collapse: collapse; align-items: center;">
+            <table class="table table-hover" style="width: 100%; border-collapse: collapse; ">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -225,7 +225,7 @@ include_once '../_inc/_header.php';
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style="align-items: center; justify-content: center;">
                     <?php
                     $stmt = $pdo->query("SELECT U.*, L.name AS level_name FROM users AS U
                                          INNER JOIN level_users AS L ON U.id_level_users = L.id
