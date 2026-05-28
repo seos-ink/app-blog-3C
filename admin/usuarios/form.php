@@ -243,8 +243,6 @@ require_once '../../conn/conect.php';
                     <div class="col-md-6" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
                         <label class="form-label fw-bold small text-muted text-uppercase" for="inputGroupFile01">Imagem</label>
                         <input type="text" class="form-control" name="image" id="inputGroupFile01" placeholder="URL da imagem" />
-                        <h5 class="small text-muted mb-2">OU selecione um arquivo local para enviar (preview local)</h5>
-                        <input type="file" class="form-control" id="inputLocalFile" accept="image/*">
                         <div class="img-preview" style="display: flex; flex-direction: column; justify-content: center; align-items: center; border: 1px solid #ccc; border-radius: 7px; padding: 0px; margin-top: 10px;">
                             <img id="imagePreview" src="" alt="Preview da Imagem" class="img-fluid rounded" style="display:none; max-height: 150px;">
                             <div id="imageError" class="text-danger small mt-2" style="display:none">Não foi possível carregar a imagem.</div>
