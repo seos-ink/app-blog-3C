@@ -209,9 +209,9 @@ include_once '../_inc/_header.php';
         </div>
     </div>
 
-    <div class="card card-list" style="border-radius: 10px; border: 1px solid darkslategray;">
+    <div class="card card-list" style="border-radius: 10px; border: 1px solid darkslategray; display: flex; ">
         <div class="card-body p-4">
-            <table class="table table-hover" style="width: 100%; border-collapse: collapse;">
+            <table class="table table-hover" style="width: 100%; border-collapse: collapse; align-items: center;">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -220,6 +220,7 @@ include_once '../_inc/_header.php';
                         <th>Email</th>
                         <th>Slug</th>
                         <th>Telefone</th>
+                        <th>Nível</th>
                         <th>Status</th>
                         <th>Ações</th>
                     </tr>
@@ -232,13 +233,16 @@ include_once '../_inc/_header.php';
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         echo "<tr>";
                         echo "<td>" . htmlspecialchars($row['id']) . "</td>";
-                        echo "<td><img src='" . htmlspecialchars($row['image']) . "' alt='Avatar' style='width: 50px; height: 50px; border-radius: 50%; object-fit: cover;'></td>";
+                        echo "<td><img src='" . htmlspecialchars($row['image']) . "' alt='Avatar' style='width: 75px; height: 75px; border-radius: 50%; object-fit: cover;'></td>";
                         echo "<td>" . htmlspecialchars($row['name']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['email']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['slug']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['phone']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['level_name']) . "</td>";
                         echo "<td>" . ($row['status'] ? 'Ativo' : 'Inativo') . "</td>";
-                        echo "<td><a href='form.php?id=" . $row['id'] . "' class='btn btn-sm btn-outline-primary'>Editar</a></td>";
+                        echo "<td><a href='editar.php?id=" . $row['id'] . "' class='btn btn-sm btn-outline-primary'>Editar</a></td>";
+
+                        echo "<td><a href='delete.php?id=" . $row['id'] . "' class='btn btn-sm btn-outline-danger' onclick=\"return confirm('Tem certeza que deseja excluir este usuário?');\">Excluir</a></td>";
                         echo "</tr>";
                     }
                     ?>
