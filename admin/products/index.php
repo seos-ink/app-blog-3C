@@ -5,6 +5,27 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 require_once '../../conn/conect.php';
+
+// <?php
+// require_once '../../_conn/conect.php';
+// try {
+//     $sql = "SELECT U.*, L.name AS level_name 
+//             FROM users AS U 
+//             INNER JOIN level_users AS L ON U.id_level_users = L.id 
+//             ORDER BY U.name ASC";
+//     $stmt = $pdo->prepare($sql);
+//     $stmt->execute();
+//     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// } catch (PDOException $e) {
+//     die("Erro na consulta: " . $e->getMessage());
+// }
+// include_once '../_inc/_header.php';
+// foreach ($users as $user):
+//     echo $user['name'];
+// endforeach;
+// 
+
+include_once '../_inc/_header.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -158,156 +179,91 @@ require_once '../../conn/conect.php';
             width: 80%;
             margin: 20px auto;
         }
+        /* .card-body {
+            margin: 0px;
+            padding: px !important;
+        } */
 
 
     </style>
 </head>
 <body> 
 
-    <?php include_once '../_inc/_header.php'; ?>
     <main id="main-content">
 
     <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h4 class="fw-bold mb-0">Novo Usuário</h4>
+            <h4 class="fw-bold mb-0">Lista de Produtos</h4>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb small mb-0">
                     <li class="breadcrumb-item"><a href="../home.php">Home</a></li>
-                    <li class="breadcrumb-item"><a href="index.php">Usuários</a></li>
-                    <li class="breadcrumb-item active">Cadastro</li>
+                    <li class="breadcrumb-item active">Produtos</li>
                 </ol>
             </nav>
         </div>
-        <!-- <div class="d-flex gap-2">
-            <a href="index.php" class="btn btn-outline-secondary px-3">
-                <i class="fas fa-times me-2"></i>Cancelar
+        <div>
+            <a href="form.php" class="btn btn-primary px-5 shadow-sm">
+                <i class="bi bi-plus-lg me-2"></i>Adicionar Novo
             </a>
-            <button type="submit" form="formCadastro" class="btn btn-primary px-4">
-                <i class="fas fa-check me-2"></i>Salvar Registro
-            </button>
-        </div> -->
+        </div>
     </div>
 
-    <div class="card card-full">
-        <div class="card-header bg-white py-3">
-            <h6 class="fw-bold mb-0 text-dark">Cadastro</h6>
-        </div>
-
-            <?php if(isset($_GET['errornull'])): ?>
-                <div class="alert alert-danger" role="alert">
-                    <strong>Erro!</strong> Todos os campos são obrigatórios.
-                </div>
-            <?php endif; ?>
-
-            <?php if(isset($_GET['errorhash'])): ?>
-                <div class="alert alert-danger" role="alert">
-                    <strong>Erro!</strong> As senhas não conferem.
-                </div>
-            <?php endif; ?>
-
-            <?php if(isset($_GET['success'])): ?>
-                <div class="alert alert-success" role="alert">
-                    Usuário cadastrado com sucesso.
-                </div>
-            <?php endif; ?>
-
+    <div class="card card-list" style="border-radius: 10px; border: 1px solid darkslategray;">
         <div class="card-body p-4">
-            <form action="insert.php" method="POST" id="formCadastro" enctype="multipart/form-data">
+            <table class="table table-hover" style="width: 100%; border-collapse: collapse; ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Imagem</th>
+                        <th>Título</th>
+                        <th>Descrição</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody style="align-items: center; justify-content: center;">
+                    <?php
+                    $stmt = $pdo->query("SELECT U.*, L.status AS status_products FROM products AS U
+                                         INNER JOIN status_products AS L ON U.id_status = L.id
+                                         ORDER BY U.id ASC");
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($row['id']) . "</td>";
+                        echo "<td><img src='" . htmlspecialchars($row['image']) . "' alt='image' style='width: 75px; height: 75px; border-radius: 50%; object-fit: cover;'></td>";
+                        echo "<td>" . htmlspecialchars($row['title']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['description']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['status_products']) . "</td>";
+                        // echo "<td>" . ($row['status'] ? 'Ativo' : 'Inativo') . "</td>";
+                        echo "<td><a href='editar.php?id=" . $row['id'] . "' class='btn btn-sm btn-outline-primary'>Editar</a></td>";
 
-                <div class="row g-4 mb-4">
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Nome Completo *</label>
-                        <input type="text" name="name" class="form-control form-control-flat" placeholder="Digite o nome" >
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">E-mail Principal *</label>
-                        <input type="email" name="email" class="form-control form-control-flat" placeholder="exemplo@blog.com" >
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Nível de Permissão *</label>
-
-                        <select name="id_level_users" class="form-select form-control-flat">
-                            <?php
-                            // Select de dados da tabela level_users
-                            $stmt = $pdo->prepare("Select *from level_users");
-                            $stmt->execute();
-                            foreach($stmt as $row) {
-                                echo '<option value="'.$row['id'].'">' . $row['name'] . '</option>';
-                            }
-                            ?>
-                        </select>
-
-                    </div>
-
-                    <div class="col-md-6" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                        <label class="form-label fw-bold small text-muted text-uppercase" for="inputGroupFile01">Imagem</label>
-                        <input type="text" class="form-control" name="image" id="inputGroupFile01" placeholder="URL da imagem" />
-                        <div class="img-preview" style="display: flex; flex-direction: column; justify-content: center; align-items: center; border: 1px solid #ccc; border-radius: 7px; padding: 0px; margin-top: 10px;">
-                            <img id="imagePreview" src="" alt="Preview da Imagem" class="img-fluid rounded" style="display:none; max-height: 150px;">
-                            <div id="imageError" class="text-danger small mt-2" style="display:none">Não foi possível carregar a imagem.</div>
-                        </div>
-                        <!-- <input type="file" class="form-control mt-2" id="inputLocalFile" accept="image/*" /> -->
-                    </div>
-                </div>
-
-                <div class="row g-4 mb-4">
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Senha de Acesso *</label>
-                        <input type="password" name="password" class="form-control form-control-flat" placeholder="••••••••" >
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Confirmar Senha *</label>
-                        <input type="password" name="pass_confirm" class="form-control form-control-flat" placeholder="••••••••" >
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Telefone *</label>
-                        <input type="tel" pattern="\(\d{2}\)\s\d{5}-\d{4}" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" class="form-control form-control-flat" placeholder="(12) 999999-9999">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Slug *</label>
-                        <input type="text" class="form-control form-control-flat" placeholder="Ex.: fulano-de-tal" name="slug">
-                    </div>                                    
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Status da Conta *</label>
-                        <div class="d-flex align-items-center h-100 mt-2">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="statusSwitch" name="status" checked>
-                                <label class="form-check-label ms-2" for="statusSwitch">Usuário Ativo</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>               
-
-            </form>
+                        echo "<td><a href='delete.php?id=" . $row['id'] . "' class='btn btn-sm btn-outline-danger' onclick=\"return confirm('Tem certeza que deseja excluir este usuário?');\">Excluir</a></td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
-        <div class="card-footer bg-light py-3 d-flex justify-content-end gap-2">
-            <span class="text-muted small align-self-center me-auto ms-2">Campos marcados com * são obrigatórios</span>
-            <button type="submit" form="formCadastro" class="btn btn-primary px-5 shadow-sm">
-                Salvar Novo Usuário
-            </button>
-        </div>
-    </div>
+     </div>
 
-    <div class="user-list mt-4">
+     <div class="user-list mt-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <a href="index.php" class="btn btn-outline-secondary px-3">
-                <i class="bi bi-arrow-left me-2"></i>Voltar para Lista
+            <a href="../home.php" class="btn btn-outline-secondary px-3">
+                <i class="bi bi-arrow-left me-2"></i>Voltar para Dashboard
             </a>
-    </div>
+     </div>
 
-</div>
+     </div>
+        
 
-
-
-<?php include_once '../_inc/_footer.php'; ?>
+    <?php include_once '../_inc/_footer.php'; ?>
 
 
 
     </main>
 
     <script src="<?= $base_url; ?>public/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script>
+    <!-- <script>
         (function(){
             const input = document.getElementById('inputGroupFile01');
             const fileInput = document.getElementById('inputLocalFile');
@@ -392,6 +348,6 @@ require_once '../../conn/conect.php';
                 updatePreviewFromUrl(input.value.trim());
             }
         })();
-    </script>
+    </script> -->
 </body>
 </html>

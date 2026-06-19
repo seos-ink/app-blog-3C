@@ -9,8 +9,13 @@
                     <i class="bi bi-grid-1x2-fill"></i> Dashboard
                 </a>
             </li>
-                <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="collapse" href="#userSubmenu" role="button" aria-expanded="true">
+            <li class="nav-item">
+                <a href="<?= $base_url; ?>admin/usuarios/index.php" class="nav-link">
+                    <i class="bi bi-people-fill"></i> Usuários
+                </a>
+            </li>
+                <!-- <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="<?= $base_url; ?>admin/usuarios/index.php" role="button" aria-expanded="true">
                     <i class="bi bi-people-fill"></i> 
                     <span>Usuários</span>
                     <i class="bi bi-chevron-down ms-auto small"></i>
@@ -21,11 +26,11 @@
                         <li><a href="<?= $base_url; ?>admin/usuarios/index.php" class="submenu-link"><i class="bi bi-list-ul me-2"></i> Lista de Usuários</a></li>
                     </ul>
                 </div>
-            </li>
+            </li> -->
 
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="bi bi-bag-check-fill"></i> Vendas
+                <a href="<?= $base_url; ?>admin/products/index.php" class="nav-link">
+                    <i class="bi bi-bag-check-fill"></i> Produtos
                 </a>
             </li>
             <li class="nav-item">
