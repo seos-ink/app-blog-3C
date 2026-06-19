@@ -4,7 +4,7 @@ require_once '../../conn/conect.php';
 $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
 // validação do form.php
-if (empty($post['title']) || empty($post['description']) || empty($post['status']) || empty($post['image'])) {
+if (empty($post['title']) || empty($post['description']) || empty($post['id_status']) || empty($post['image'])) {
 	header('Location: form.php?errornull=true');
 	exit();
 }

@@ -170,11 +170,11 @@ require_once '../../conn/conect.php';
     <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h4 class="fw-bold mb-0">Novo Usuário</h4>
+            <h4 class="fw-bold mb-0">Novo Produto</h4>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb small mb-0">
                     <li class="breadcrumb-item"><a href="../home.php">Home</a></li>
-                    <li class="breadcrumb-item"><a href="index.php">Usuários</a></li>
+                    <li class="breadcrumb-item"><a href="index.php">Produtos</a></li>
                     <li class="breadcrumb-item active">Cadastro</li>
                 </ol>
             </nav>
@@ -200,15 +200,15 @@ require_once '../../conn/conect.php';
                 </div>
             <?php endif; ?>
 
-            <?php if(isset($_GET['errorhash'])): ?>
+            <!-- <?php if(isset($_GET['errorhash'])): ?>
                 <div class="alert alert-danger" role="alert">
                     <strong>Erro!</strong> As senhas não conferem.
                 </div>
-            <?php endif; ?>
+            <?php endif; ?> -->
 
             <?php if(isset($_GET['success'])): ?>
                 <div class="alert alert-success" role="alert">
-                    Usuário cadastrado com sucesso.
+                    Produto cadastrado com sucesso.
                 </div>
             <?php endif; ?>
 
@@ -217,23 +217,22 @@ require_once '../../conn/conect.php';
 
                 <div class="row g-4 mb-4">
                     <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Nome Completo *</label>
-                        <input type="text" name="name" class="form-control form-control-flat" placeholder="Digite o nome" >
+                        <label class="form-label fw-bold small text-muted text-uppercase">Nome do Produto *</label>
+                        <input type="text" name="title" class="form-control form-control-flat" placeholder="Digite o nome" >
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">E-mail Principal *</label>
-                        <input type="email" name="email" class="form-control form-control-flat" placeholder="exemplo@blog.com" >
+                        <label class="form-label fw-bold small text-muted text-uppercase">Descrição *</label>
+                        <input type="text" name="description" class="form-control form-control-flat" placeholder="Digite a descrição" >
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Nível de Permissão *</label>
+                        <label class="form-label fw-bold small text-muted text-uppercase">Status de Venda *</label>
 
-                        <select name="id_level_users" class="form-select form-control-flat">
+                        <select name="id_status" class="form-select form-control-flat">
                             <?php
-                            // Select de dados da tabela level_users
-                            $stmt = $pdo->prepare("Select *from level_users");
+                            $stmt = $pdo->prepare("Select *from status_products");
                             $stmt->execute();
                             foreach($stmt as $row) {
-                                echo '<option value="'.$row['id'].'">' . $row['name'] . '</option>';
+                                echo '<option value="'.$row['id'].'">' . $row['status'] . '</option>';
                             }
                             ?>
                         </select>
@@ -251,40 +250,14 @@ require_once '../../conn/conect.php';
                     </div>
                 </div>
 
-                <div class="row g-4 mb-4">
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Senha de Acesso *</label>
-                        <input type="password" name="password" class="form-control form-control-flat" placeholder="••••••••" >
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Confirmar Senha *</label>
-                        <input type="password" name="pass_confirm" class="form-control form-control-flat" placeholder="••••••••" >
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Telefone *</label>
-                        <input type="tel" pattern="\(\d{2}\)\s\d{5}-\d{4}" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" class="form-control form-control-flat" placeholder="(12) 999999-9999">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Slug *</label>
-                        <input type="text" class="form-control form-control-flat" placeholder="Ex.: fulano-de-tal" name="slug">
-                    </div>                                    
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Status da Conta *</label>
-                        <div class="d-flex align-items-center h-100 mt-2">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="statusSwitch" name="status" checked>
-                                <label class="form-check-label ms-2" for="statusSwitch">Usuário Ativo</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>               
+                           
 
             </form>
         </div>
         <div class="card-footer bg-light py-3 d-flex justify-content-end gap-2">
             <span class="text-muted small align-self-center me-auto ms-2">Campos marcados com * são obrigatórios</span>
             <button type="submit" form="formCadastro" class="btn btn-primary px-5 shadow-sm">
-                Salvar Novo Usuário
+                Salvar Novo Produto
             </button>
         </div>
     </div>
