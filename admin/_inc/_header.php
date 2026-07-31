@@ -34,8 +34,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="bi bi-gear-fill"></i> Ajustes
+                <a href="<?= $base_url; ?>admin/blogs/index.php" class="nav-link">
+                    <i class="bi bi-megaphone-fill"></i> Blogs
                 </a>
             </li>
         </ul>

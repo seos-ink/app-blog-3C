@@ -170,11 +170,11 @@ require_once '../../conn/conect.php';
     <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h4 class="fw-bold mb-0">Novo Produto</h4>
+            <h4 class="fw-bold mb-0">Novo Blog</h4>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb small mb-0">
                     <li class="breadcrumb-item"><a href="../home.php">Home</a></li>
-                    <li class="breadcrumb-item"><a href="index.php">Produtos</a></li>
+                    <li class="breadcrumb-item"><a href="index.php">Blogs</a></li>
                     <li class="breadcrumb-item active">Cadastro</li>
                 </ol>
             </nav>
@@ -200,12 +200,6 @@ require_once '../../conn/conect.php';
                 </div>
             <?php endif; ?>
 
-            <!-- <?php if(isset($_GET['errorhash'])): ?>
-                <div class="alert alert-danger" role="alert">
-                    <strong>Erro!</strong> As senhas não conferem.
-                </div>
-            <?php endif; ?> -->
-
             <?php if(isset($_GET['success'])): ?>
                 <div class="alert alert-success" role="alert">
                     Produto cadastrado com sucesso.
@@ -213,23 +207,31 @@ require_once '../../conn/conect.php';
             <?php endif; ?>
 
         <div class="card-body p-4">
-            <form action="insert.php" method="POST" id="formCadastro" enctype="multipart/form-data">
+            <form action="insert.php" method="POST" id="formBlog" enctype="multipart/form-data">
 
                 <div class="row g-4 mb-4">
                     <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Nome do Produto *</label>
+                        <label class="form-label fw-bold small text-muted text-uppercase">Nome do Blog *</label>
                         <input type="text" name="title" class="form-control form-control-flat" placeholder="Digite o nome" >
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Subtítulo *</label>
+                        <input type="text" name="subtitle" class="form-control form-control-flat" placeholder="Digite o subtítulo" >
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold small text-muted text-uppercase">Descrição *</label>
                         <input type="text" name="description" class="form-control form-control-flat" placeholder="Digite a descrição" >
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold small text-muted text-uppercase">Status de Venda *</label>
+                        <label class="form-label fw-bold small text-muted text-uppercase">Slug *</label>
+                        <input type="text" name="slug" class="form-control form-control-flat" placeholder="teste-slug" >
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Status *</label>
 
-                        <select name="id_status" class="form-select form-control-flat">
+                        <select name="status" class="form-select form-control-flat">
                             <?php
-                            $stmt = $pdo->prepare("Select *from status_products");
+                            $stmt = $pdo->prepare("Select * from status_blogs");
                             $stmt->execute();
                             foreach($stmt as $row) {
                                 echo '<option value="'.$row['id'].'">' . $row['status'] . '</option>';
@@ -256,8 +258,8 @@ require_once '../../conn/conect.php';
         </div>
         <div class="card-footer bg-light py-3 d-flex justify-content-end gap-2">
             <span class="text-muted small align-self-center me-auto ms-2">Campos marcados com * são obrigatórios</span>
-            <button type="submit" form="formCadastro" class="btn btn-primary px-5 shadow-sm">
-                Salvar Novo Produto
+            <button type="submit" form="formBlog" class="btn btn-primary px-5 shadow-sm">
+                Salvar Novo Blog
             </button>
         </div>
     </div>

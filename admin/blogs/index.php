@@ -194,11 +194,11 @@ include_once '../_inc/_header.php';
     <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h4 class="fw-bold mb-0">Lista de Produtos</h4>
+            <h4 class="fw-bold mb-0">Lista de Blogs</h4>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb small mb-0">
                     <li class="breadcrumb-item"><a href="../home.php">Home</a></li>
-                    <li class="breadcrumb-item active">Produtos</li>
+                    <li class="breadcrumb-item active">Blogs</li>
                 </ol>
             </nav>
         </div>
@@ -226,13 +226,13 @@ include_once '../_inc/_header.php';
                 </thead>
                 <tbody style="align-items: center; justify-content: center;">
                     <?php
-                    $stmt = $pdo->query("SELECT U.*, L.status AS status_blog FROM blogs AS U
-                                         INNER JOIN status_blog AS L ON U.status = L.id
+                    $stmt = $pdo->query("SELECT U.*, L.status AS status_blogs FROM blogs AS U
+                                         INNER JOIN status_blogs AS L ON U.status = L.id
                                          ORDER BY U.id ASC");
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         echo "<tr>";
                         echo "<td>" . htmlspecialchars($row['id']) . "</td>";
-                        echo "<td><img src='" . htmlspecialchars($row['image']) . "' alt='image' style='width: 75px; height: 75px; border-radius: 50%; object-fit: cover;'></td>";
+                        echo "<td><img src='" . htmlspecialchars($row['image']) . "' alt='image' style='width: 75px; height: 75px; border-radius: 25%; object-fit: cover;'></td>";
                         echo "<td>" . htmlspecialchars($row['title']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['subtitle']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['description']) . "</td>";
