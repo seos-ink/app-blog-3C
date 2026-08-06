@@ -237,8 +237,8 @@ include_once '../_inc/_header.php';
                         echo "<td>" . htmlspecialchars($row['subtitle']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['description']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['slug']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['status']) . "</td>";
-                        // echo "<td>" . ($row['status'] ? 'Ativo' : 'Inativo') . "</td>";
+                        // echo "<td>" . htmlspecialchars($row['status']) . "</td>";
+                        echo "<td>" . ($row['status'] ? 'Ativo' : 'Inativo') . "</td>";
                         echo "<td><a href='editar.php?id=" . $row['id'] . "' class='btn btn-sm btn-outline-primary'>Editar</a></td>";
 
                         echo "<td><a href='delete.php?id=" . $row['id'] . "' class='btn btn-sm btn-outline-danger' onclick=\"return confirm('Tem certeza que deseja excluir este produto?');\">Excluir</a></td>";
