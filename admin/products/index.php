@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 if (!isset($_SESSION['email'])) {
     header('Location: index.php');
@@ -6,40 +6,33 @@ if (!isset($_SESSION['email'])) {
 }
 require_once '../../conn/conect.php';
 
-// <?php
-// require_once '../../_conn/conect.php';
-// try {
-//     $sql = "SELECT U.*, L.name AS level_name 
-//             FROM users AS U 
-//             INNER JOIN level_users AS L ON U.id_level_users = L.id 
-//             ORDER BY U.name ASC";
-//     $stmt = $pdo->prepare($sql);
-//     $stmt->execute();
-//     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// } catch (PDOException $e) {
-//     die("Erro na consulta: " . $e->getMessage());
-// }
-// include_once '../_inc/_header.php';
-// foreach ($users as $user):
-//     echo $user['name'];
-// endforeach;
-// 
+try {
+    $sql = "SELECT * FROM products ORDER BY id DESC";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Erro na consulta: " . $e->getMessage());
+}
 
 include_once '../_inc/_header.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin | Dashboard</title>
-    
+
     <link rel="stylesheet" href="<?= $base_url; ?>public/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <style>
         body {
-            background-color: #e4e4e4ff; /* Mesmo fundo do login */
+            background-color: #e4e4e4ff;
+            /* Mesmo fundo do login */
             font-family: 'Segoe UI', Roboto, sans-serif;
         }
 
@@ -49,7 +42,7 @@ include_once '../_inc/_header.php';
             height: 100vh;
             position: fixed;
             background: #0c2746ff;
-            border-right: 1px solid rgba(0,0,0,0.05);
+            border-right: 1px solid rgba(0, 0, 0, 0.05);
             transition: all 0.3s;
         }
 
@@ -69,7 +62,8 @@ include_once '../_inc/_header.php';
             transition: 0.3s;
         }
 
-        .nav-link:hover, .nav-link.active {
+        .nav-link:hover,
+        .nav-link.active {
             background-color: #3291bda9;
             color: #fff !important;
             border-radius: 25px;
@@ -103,7 +97,7 @@ include_once '../_inc/_header.php';
         .top-nav {
             background: #fff;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
             margin-bottom: 30px;
             padding: 15px 25px;
         }
@@ -112,24 +106,34 @@ include_once '../_inc/_header.php';
             border-radius: 8px;
             font-weight: 600;
         }
-        .btn.btn-primary, .btn.btn-primary.px-5.shadow-sm {
+
+        .btn.btn-primary,
+        .btn.btn-primary.px-5.shadow-sm {
             background-color: #0c2746ff;
             border: none;
             /* transition: background-color 0.3s, box-shadow 0.3s; */
         }
+
         .btn.btn-primary:hover {
             background-color: #0a1f3dff;
             box-shadow: 0 4px 12px rgba(12, 39, 70, 0.4);
         }
+
         .card.card-full {
             border-radius: 5px;
             border: 1px solid black;
         }
 
         @media (max-width: 768px) {
-            #sidebar { margin-left: -260px; }
-            #main-content { margin-left: 0; }
+            #sidebar {
+                margin-left: -260px;
+            }
+
+            #main-content {
+                margin-left: 0;
+            }
         }
+
         .form-control {
             width: 100%;
             /* padding: 10px; */
@@ -138,10 +142,12 @@ include_once '../_inc/_header.php';
             border-radius: 10px;
             box-sizing: border-box;
         }
+
         .form-control:focus {
             border-color: #0f1318ff;
             box-shadow: 0 0 10px rgba(15, 19, 24, 0.5);
         }
+
         .form-select {
             width: 100%;
             /* padding: 10px; */
@@ -150,10 +156,12 @@ include_once '../_inc/_header.php';
             border-radius: 10px;
             box-sizing: border-box;
         }
+
         .form-select:focus {
             border-color: #0f1318ff;
             box-shadow: 0 0 10px rgba(15, 19, 24, 0.5);
         }
+
         .form-check-input {
             width: 40px;
             height: 20px;
@@ -161,10 +169,12 @@ include_once '../_inc/_header.php';
             background-color: #ccc;
             transition: background-color 0.3s, box-shadow 0.3s;
         }
+
         .form-check-input:checked {
             background-color: #0c2746ff;
             box-shadow: 0 4px 12px rgba(12, 39, 70, 0.4);
         }
+
         .alert.alert-danger {
             background-color: #f8d7da;
             border-color: #f5c6cb;
@@ -172,6 +182,7 @@ include_once '../_inc/_header.php';
             width: 80%;
             margin: 10px auto;
         }
+
         .alert.alert-success {
             background-color: #d4edda;
             border-color: #c3e6cb;
@@ -179,84 +190,115 @@ include_once '../_inc/_header.php';
             width: 80%;
             margin: 20px auto;
         }
+
         /* .card-body {
             margin: 0px;
             padding: px !important;
         } */
-
-
     </style>
 </head>
-<body> 
+
+<body>
 
     <main id="main-content">
 
-    <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h4 class="fw-bold mb-0">Lista de Produtos</h4>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb small mb-0">
-                    <li class="breadcrumb-item"><a href="../home.php">Home</a></li>
-                    <li class="breadcrumb-item active">Produtos</li>
-                </ol>
-            </nav>
-        </div>
-        <div>
-            <a href="form.php" class="btn btn-primary px-5 shadow-sm">
-                <i class="bi bi-plus-lg me-2"></i>Adicionar Novo
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h4 class="fw-bold mb-0">Gerenciar Produtos Registrados</h4>
+                <p class="text-muted small mb-0">Total de <?= count($products); ?> produtos cadastrados.</p>
+            </div>
+            <a href="form.php" class="btn btn-primary shadow-sm px-4">
+                <i class="fas fa-plus me-2"></i>Adicionar
             </a>
         </div>
-    </div>
 
-    <div class="card card-list" style="border-radius: 10px; border: 1px solid darkslategray;">
-        <div class="card-body p-4">
-            <table class="table table-hover" style="width: 100%; border-collapse: collapse; ">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Imagem</th>
-                        <th>Título</th>
-                        <th>Descrição</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody style="align-items: center; justify-content: center;">
-                    <?php
-                    $stmt = $pdo->query("SELECT U.*, L.status AS status_products FROM products AS U
-                                         INNER JOIN status_products AS L ON U.id_status = L.id
-                                         ORDER BY U.id ASC");
-                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        echo "<tr>";
-                        echo "<td>" . htmlspecialchars($row['id']) . "</td>";
-                        echo "<td><img src='" . htmlspecialchars($row['image']) . "' alt='image' style='width: 75px; height: 75px; border-radius: 50%; object-fit: cover;'></td>";
-                        echo "<td>" . htmlspecialchars($row['title']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['description']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['status_products']) . "</td>";
-                        // echo "<td>" . ($row['status'] ? 'Ativo' : 'Inativo') . "</td>";
-                        echo "<td><a href='editar.php?id=" . $row['id'] . "' class='btn btn-sm btn-outline-primary'>Editar</a></td>";
+        <div class="card card-full border-0 shadow-sm">
+            <?php if (isset($_GET['deleted'])): ?>
+                <div class="alert alert-success m-3" role="alert">Produto excluído com sucesso!</div>
+            <?php endif; ?>
 
-                        echo "<td><a href='delete.php?id=" . $row['id'] . "' class='btn btn-sm btn-outline-danger' onclick=\"return confirm('Tem certeza que deseja excluir este produto?');\">Excluir</a></td>";
-                        echo "</tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-     </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr class="text-muted small">
+                                <th class="ps-4" style="width: 40%">TÍTULO / DESCRIÇÃO</th>
+                                <th style="width: 15%">STATUS</th>
+                                <th class="text-end pe-4" style="width: 20%">AÇÕES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (count($products) > 0): ?>
+                                <?php foreach ($products as $product): ?>
+                                    <tr>
+                                        <td class="ps-4">
+                                            <div class="d-flex align-items-center">
+                                                <?php if (!empty($product['image'])): ?>
+                                                    <img src="<?= $product['image']; ?>"
+                                                        class="rounded me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                                                <?php else: ?>
+                                                    <div class="bg-light border rounded me-3 d-flex align-items-center justify-content-center text-muted"
+                                                        style="width: 50px; height: 50px;">
+                                                        <i class="fas fa-image"></i>
+                                                    </div>
+                                                <?php endif; ?>
 
-     <div class="user-list mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <a href="../home.php" class="btn btn-outline-secondary px-3">
-                <i class="bi bi-arrow-left me-2"></i>Voltar para Dashboard
-            </a>
-     </div>
+                                                <div>
+                                                    <div class="fw-bold text-dark"><?= htmlspecialchars($product['title']); ?>
+                                                    </div>
+                                                    <div class="text-muted small text-truncate" style="max-width: 300px;">
+                                                        <?= htmlspecialchars($product['description'] ?? ''); ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="d-flex align-items-center">
+                                                <span
+                                                    class="status-dot <?= $product['id_status'] == 1 ? 'bg-success' : 'bg-danger'; ?>"></span>
+                                                <span
+                                                    class="small fw-bold <?= $product['id_status'] == 1 ? 'text-success' : 'text-danger'; ?>">
+                                                    <?= $product['id_status'] == 1 ? 'Ativo' : 'Inativo'; ?>
+                                                </span>
+                                            </span>
+                                        </td>
+                                        <td class="text-end pe-4">
+                                            <div class="btn-group shadow-sm">
+                                                <a href="form_update.php?id=<?= $product['id']; ?>"
+                                                    class="btn btn-white btn-sm border" title="Editar">
+                                                    <i class="fas fa-edit text-primary"></i>
+                                                </a>
+                                                <a href="javascript:void(0)" class="btn btn-white btn-sm border" title="Excluir"
+                                                    onclick="confirmarExclusao(<?= $product['id']; ?>, '<?= addslashes(htmlspecialchars($product['title'])); ?>')">
+                                                    <i class="fas fa-trash-alt text-danger"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="4" class="text-center py-5 text-muted">
+                                        Nenhum post encontrado no banco de dados.
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-     </div>
-        
+            <div class="user-list mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <a href="../home.php" class="btn btn-outline-secondary px-3">
+                        <i class="bi bi-arrow-left me-2"></i>Voltar para Dashboard
+                    </a>
+                </div>
 
-    <?php include_once '../_inc/_footer.php'; ?>
+            </div>
+
+
+            <?php include_once '../_inc/_footer.php'; ?>
 
 
 
@@ -350,4 +392,5 @@ include_once '../_inc/_header.php';
         })();
     </script> -->
 </body>
+
 </html>

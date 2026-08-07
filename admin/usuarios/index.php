@@ -6,24 +6,17 @@ if (!isset($_SESSION['email'])) {
 }
 require_once '../../conn/conect.php';
 
-// <?php
-// require_once '../../_conn/conect.php';
-// try {
-//     $sql = "SELECT U.*, L.name AS level_name 
-//             FROM users AS U 
-//             INNER JOIN level_users AS L ON U.id_level_users = L.id 
-//             ORDER BY U.name ASC";
-//     $stmt = $pdo->prepare($sql);
-//     $stmt->execute();
-//     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// } catch (PDOException $e) {
-//     die("Erro na consulta: " . $e->getMessage());
-// }
-// include_once '../_inc/_header.php';
-// foreach ($users as $user):
-//     echo $user['name'];
-// endforeach;
-// 
+try {
+    $sql = "SELECT U.*, L.name AS level_name 
+            FROM users AS U 
+            INNER JOIN level_users AS L ON U.id_level_users = L.id 
+            ORDER BY U.name ASC";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Erro na consulta: " . $e->getMessage());
+}
 
 include_once '../_inc/_header.php';
 ?>
@@ -194,13 +187,8 @@ include_once '../_inc/_header.php';
     <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h4 class="fw-bold mb-0">Lista de Usuários</h4>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb small mb-0">
-                    <li class="breadcrumb-item"><a href="../home.php">Home</a></li>
-                    <li class="breadcrumb-item active">Usuários</li>
-                </ol>
-            </nav>
+            <h4 class="fw-bold mb-0">Gerenciar Usuários</h4>
+            <p class="text-muted small mb-0">Total de <?= count($users); ?> usuários cadastrados.</p>
         </div>
         <div>
             <a href="form.php" class="btn btn-primary px-5 shadow-sm">
@@ -209,47 +197,81 @@ include_once '../_inc/_header.php';
         </div>
     </div>
 
-    <div class="card card-list" style="border-radius: 10px; border: 1px solid darkslategray;">
-        <div class="card-body p-4">
-            <table class="table table-hover" style="width: 100%; border-collapse: collapse; ">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Avatar</th>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>Slug</th>
-                        <th>Telefone</th>
-                        <th>Nível</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody style="align-items: center; justify-content: center;">
-                    <?php
-                    $stmt = $pdo->query("SELECT U.*, L.name AS level_name FROM users AS U
-                                         INNER JOIN level_users AS L ON U.id_level_users = L.id
-                                         ORDER BY U.id ASC");
-                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        echo "<tr>";
-                        echo "<td>" . htmlspecialchars($row['id']) . "</td>";
-                        echo "<td><img src='" . htmlspecialchars($row['image']) . "' alt='Avatar' style='width: 75px; height: 75px; border-radius: 50%; object-fit: cover;'></td>";
-                        echo "<td>" . htmlspecialchars($row['name']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['slug']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['phone']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['level_name']) . "</td>";
-                        echo "<td>" . ($row['status'] ? 'Ativo' : 'Inativo') . "</td>";
-                        echo "<td><a href='editar.php?id=" . $row['id'] . "' class='btn btn-sm btn-outline-primary'>Editar</a></td>";
+    <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr class="text-muted small">
+                                <th class="ps-4" style="width: 35%">NOME / E-MAIL</th>
+                                <th style="width: 20%">NÍVEL</th>
+                                <th style="width: 20%">SLUG</th>
+                                <th style="width: 10%">STATUS</th>
+                                <th class="text-end pe-4" style="width: 15%">AÇÕES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($users as $user): ?>
+                                <tr>
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+                                            <?php if (!empty($user['image'])): ?>
+                                                <img src="<?= $user['image']; ?>" class="rounded me-3"
+                                                    style="width: 50px; height: 50px; object-fit: cover;">
+                                            <?php else: ?>
+                                                <div class="bg-light border rounded me-3 d-flex align-items-center justify-content-center text-muted"
+                                                    style="width: 50px; height: 50px;">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                            <?php endif; ?>
 
-                        echo "<td><a href='delete.php?id=" . $row['id'] . "' class='btn btn-sm btn-outline-danger' onclick=\"return confirm('Tem certeza que deseja excluir este usuário?');\">Excluir</a></td>";
-                        echo "</tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-     </div>
+                                            <div>
+                                                <div class="fw-bold text-dark"><?= htmlspecialchars($user['name']); ?></div>
+                                                <div class="text-muted small text-truncate" style="max-width: 300px;">
+                                                    <?= htmlspecialchars($user['email']); ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 text-capitalize">
+                                            <?= htmlspecialchars($user['level_name']); ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="text-muted small text-truncate" style="max-width: 200px;">
+                                            <?= htmlspecialchars($user['slug'] ?? ''); ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="d-flex align-items-center">
+                                            <span
+                                                class="status-dot <?= $user['status'] == 1 ? 'bg-success' : 'bg-danger'; ?>"></span>
+                                            <span
+                                                class="small fw-bold <?= $user['status'] == 1 ? 'text-success' : 'text-danger'; ?>">
+                                                <?= $user['status'] == 1 ? 'Ativo' : 'Inativo'; ?>
+                                            </span>
+                                        </span>
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group shadow-sm">
+                                            <a href="form_update.php?id=<?= $user['id']; ?>"
+                                                class="btn btn-white btn-sm border" title="Editar">
+                                                <i class="fas fa-edit text-primary"></i>
+                                            </a>
+                                            <a href="javascript:void(0)" class="btn btn-white btn-sm border" title="Excluir"
+                                                onclick="confirmarExclusao(<?= $user['id']; ?>, '<?= addslashes(htmlspecialchars($user['name'])); ?>')">
+                                                <i class="fas fa-trash-alt text-danger"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
      <div class="user-list mt-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
