@@ -259,7 +259,7 @@ include_once '../_inc/_header.php';
                                                 class="btn btn-white btn-sm border" title="Editar">
                                                 <i class="bi bi-pencil-square"></i> Editar
                                             </a>
-                                            <a href="javascript:void(0)" class="btn btn-white btn-sm border" title="Excluir"
+                                            <a class="btn btn-white btn-sm border" title="Excluir"
                                                 onclick="confirmarExclusao(<?= $user['id']; ?>, '<?= addslashes(htmlspecialchars($user['name'])); ?>')">
                                                 <i class="bi bi-exclamation-diamond"></i> Excluir
                                             </a>
