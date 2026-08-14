@@ -234,8 +234,8 @@ include_once '../_inc/_header.php';
                                         <td class="ps-4">
                                             <div class="d-flex align-items-center">
                                                 <?php if (!empty($product['image'])): ?>
-                                                    <img src="<?= $product['image']; ?>"
-                                                        class="rounded me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                                                    <img src="<?= $product['image']; ?>" class="rounded me-3"
+                                                        style="width: 50px; height: 50px; object-fit: cover;">
                                                 <?php else: ?>
                                                     <div class="bg-light border rounded me-3 d-flex align-items-center justify-content-center text-muted"
                                                         style="width: 50px; height: 50px;">
@@ -266,11 +266,11 @@ include_once '../_inc/_header.php';
                                             <div class="btn-group shadow-sm">
                                                 <a href="form_update.php?id=<?= $product['id']; ?>"
                                                     class="btn btn-white btn-sm border" title="Editar">
-                                                    <i class="fas fa-edit text-primary"></i>
+                                                    <i class="bi bi-pencil-square"></i> Editar
                                                 </a>
                                                 <a href="javascript:void(0)" class="btn btn-white btn-sm border" title="Excluir"
                                                     onclick="confirmarExclusao(<?= $product['id']; ?>, '<?= addslashes(htmlspecialchars($product['title'])); ?>')">
-                                                    <i class="fas fa-trash-alt text-danger"></i>
+                                                    <i class="bi bi-exclamation-diamond"></i> Excluir
                                                 </a>
                                             </div>
                                         </td>
@@ -287,18 +287,19 @@ include_once '../_inc/_header.php';
                     </table>
                 </div>
             </div>
+        </div>
 
-            <div class="user-list mt-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <a href="../home.php" class="btn btn-outline-secondary px-3">
-                        <i class="bi bi-arrow-left me-2"></i>Voltar para Dashboard
-                    </a>
-                </div>
-
+        <div class="user-list mt-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a href="../home.php" class="btn btn-outline-secondary px-3">
+                    <i class="bi bi-arrow-left me-2"></i>Voltar para Dashboard
+                </a>
             </div>
 
+        </div>
 
-            <?php include_once '../_inc/_footer.php'; ?>
+
+        <?php include_once '../_inc/_footer.php'; ?>
 
 
 

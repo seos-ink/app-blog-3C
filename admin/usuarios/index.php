@@ -257,11 +257,11 @@ include_once '../_inc/_header.php';
                                         <div class="btn-group shadow-sm">
                                             <a href="form_update.php?id=<?= $user['id']; ?>"
                                                 class="btn btn-white btn-sm border" title="Editar">
-                                                <i class="fas fa-edit text-primary"></i>
+                                                <i class="bi bi-pencil-square"></i> Editar
                                             </a>
                                             <a href="javascript:void(0)" class="btn btn-white btn-sm border" title="Excluir"
                                                 onclick="confirmarExclusao(<?= $user['id']; ?>, '<?= addslashes(htmlspecialchars($user['name'])); ?>')">
-                                                <i class="fas fa-trash-alt text-danger"></i>
+                                                <i class="bi bi-exclamation-diamond"></i> Excluir
                                             </a>
                                         </div>
                                     </td>
