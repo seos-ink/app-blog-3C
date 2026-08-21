@@ -237,8 +237,7 @@ include_once '../_inc/_header.php';
                                             <td class="ps-4">
                                                 <div class="d-flex align-items-center">
                                                     <?php if (!empty($blog['image'])): ?>
-                                                        <img src="<?= $blog['image']; ?>"
-                                                            class="rounded me-3"
+                                                        <img src="<?= $blog['image']; ?>" class="rounded me-3"
                                                             style="width: 50px; height: 50px; object-fit: cover;">
                                                     <?php else: ?>
                                                         <div class="bg-light border rounded me-3 d-flex align-items-center justify-content-center text-muted"
@@ -321,92 +320,25 @@ include_once '../_inc/_header.php';
     </main>
 
     <script src="<?= $base_url; ?>public/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- <script>
-        (function(){
-            const input = document.getElementById('inputGroupFile01');
-            const fileInput = document.getElementById('inputLocalFile');
-            const img = document.getElementById('imagePreview');
-            const err = document.getElementById('imageError');
-
-            function clearPreview(){
-                if(img.src){
-                    URL.revokeObjectURL(img.src);
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmarExclusao(id, nome) {
+            Swal.fire({
+                title: 'Tem certeza?',
+                text: `Você deseja excluir o blog: ${nome}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sim, excluir!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `delete.php?id=${id}`;
                 }
-                img.src = '';
-                img.style.display = 'none';
-                err.style.display = 'none';
-            }
-
-            function showError(message){
-                img.style.display = 'none';
-                err.textContent = message;
-                err.style.display = 'block';
-            }
-
-            function updatePreviewFromUrl(url){
-                if(!url){
-                    clearPreview();
-                    return;
-                }
-
-                // Browsers não carregam `file://` em páginas servidas via http(s)
-                if(url.startsWith('file://')){
-                    clearPreview();
-                    showError('O navegador não permite carregar arquivos locais via `file://`. Use o botão "Escolher arquivo" abaixo ou mova a imagem para o servidor e use um URL http/https.');
-                    return;
-                }
-
-                err.style.display = 'none';
-                img.style.display = 'block';
-                img.src = url;
-            }
-
-            function updatePreviewFromFile(file){
-                if(!file){
-                    return updatePreviewFromUrl(input.value.trim());
-                }
-
-                // Limpa qualquer URL escrita
-                input.value = '';
-                err.style.display = 'none';
-                const objectUrl = URL.createObjectURL(file);
-                img.src = objectUrl;
-                img.style.display = 'block';
-            }
-
-            img.addEventListener('error', function(){
-                showError('Não foi possível carregar a imagem. Verifique a URL ou o arquivo.');
-            });
-
-            img.addEventListener('load', function(){
-                err.style.display = 'none';
-                img.style.maxHeight = '150px';
-            });
-
-            input.addEventListener('input', function(){
-                // Se o usuário começar a digitar uma URL, limpa o file input
-                if(fileInput) fileInput.value = '';
-                updatePreviewFromUrl(input.value.trim());
-            });
-
-            if(fileInput){
-                fileInput.addEventListener('change', function(e){
-                    const file = e.target.files && e.target.files[0];
-                    if(file){
-                        updatePreviewFromFile(file);
-                    } else {
-                        // sem arquivo escolhido, tenta usar a URL escrita
-                        updatePreviewFromUrl(input.value.trim());
-                    }
-                });
-            }
-
-            // Se já houver valor no input (edição), atualiza o preview
-            if(input && input.value){
-                updatePreviewFromUrl(input.value.trim());
-            }
-        })();
-    </script> -->
+            })
+        }
+    </script>
 </body>
 
 </html>

@@ -7,7 +7,12 @@ if (!isset($_SESSION['email'])) {
 require_once '../../conn/conect.php';
 
 try {
-    $sql = "SELECT * FROM products ORDER BY id DESC";
+    // $sql = "SELECT * FROM products ORDER BY id DESC";
+
+    $sql = "SELECT U.*, S.status AS status_products 
+            FROM products AS U 
+            INNER JOIN status_products AS S ON U.id_status = S.id 
+            ORDER BY U.title ASC";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
@@ -255,10 +260,8 @@ include_once '../_inc/_header.php';
                                         <td>
                                             <span class="d-flex align-items-center">
                                                 <span
-                                                    class="status-dot <?= $product['id_status'] == 1 ? 'bg-success' : 'bg-danger'; ?>"></span>
-                                                <span
-                                                    class="small fw-bold <?= $product['id_status'] == 1 ? 'text-success' : 'text-danger'; ?>">
-                                                    <?= $product['id_status'] == 1 ? 'Ativo' : 'Inativo'; ?>
+                                                    class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 text-capitalize">
+                                                    <?= htmlspecialchars($product['id_status']); ?>
                                                 </span>
                                             </span>
                                         </td>
@@ -306,92 +309,25 @@ include_once '../_inc/_header.php';
     </main>
 
     <script src="<?= $base_url; ?>public/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- <script>
-        (function(){
-            const input = document.getElementById('inputGroupFile01');
-            const fileInput = document.getElementById('inputLocalFile');
-            const img = document.getElementById('imagePreview');
-            const err = document.getElementById('imageError');
-
-            function clearPreview(){
-                if(img.src){
-                    URL.revokeObjectURL(img.src);
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmarExclusao(id, nome) {
+            Swal.fire({
+                title: 'Tem certeza?',
+                text: `Você deseja excluir o usuário: ${nome}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sim, excluir!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `delete.php?id=${id}`;
                 }
-                img.src = '';
-                img.style.display = 'none';
-                err.style.display = 'none';
-            }
-
-            function showError(message){
-                img.style.display = 'none';
-                err.textContent = message;
-                err.style.display = 'block';
-            }
-
-            function updatePreviewFromUrl(url){
-                if(!url){
-                    clearPreview();
-                    return;
-                }
-
-                // Browsers não carregam `file://` em páginas servidas via http(s)
-                if(url.startsWith('file://')){
-                    clearPreview();
-                    showError('O navegador não permite carregar arquivos locais via `file://`. Use o botão "Escolher arquivo" abaixo ou mova a imagem para o servidor e use um URL http/https.');
-                    return;
-                }
-
-                err.style.display = 'none';
-                img.style.display = 'block';
-                img.src = url;
-            }
-
-            function updatePreviewFromFile(file){
-                if(!file){
-                    return updatePreviewFromUrl(input.value.trim());
-                }
-
-                // Limpa qualquer URL escrita
-                input.value = '';
-                err.style.display = 'none';
-                const objectUrl = URL.createObjectURL(file);
-                img.src = objectUrl;
-                img.style.display = 'block';
-            }
-
-            img.addEventListener('error', function(){
-                showError('Não foi possível carregar a imagem. Verifique a URL ou o arquivo.');
-            });
-
-            img.addEventListener('load', function(){
-                err.style.display = 'none';
-                img.style.maxHeight = '150px';
-            });
-
-            input.addEventListener('input', function(){
-                // Se o usuário começar a digitar uma URL, limpa o file input
-                if(fileInput) fileInput.value = '';
-                updatePreviewFromUrl(input.value.trim());
-            });
-
-            if(fileInput){
-                fileInput.addEventListener('change', function(e){
-                    const file = e.target.files && e.target.files[0];
-                    if(file){
-                        updatePreviewFromFile(file);
-                    } else {
-                        // sem arquivo escolhido, tenta usar a URL escrita
-                        updatePreviewFromUrl(input.value.trim());
-                    }
-                });
-            }
-
-            // Se já houver valor no input (edição), atualiza o preview
-            if(input && input.value){
-                updatePreviewFromUrl(input.value.trim());
-            }
-        })();
-    </script> -->
+            })
+        }
+    </script>
 </body>
 
 </html>
