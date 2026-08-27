@@ -261,7 +261,7 @@ include_once '../_inc/_header.php';
                                             <span class="d-flex align-items-center">
                                                 <span
                                                     class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 text-capitalize">
-                                                    <?= htmlspecialchars($product['id_status']); ?>
+                                                    <?= htmlspecialchars($product['status_products']); ?>
                                                 </span>
                                             </span>
                                         </td>
@@ -300,9 +300,6 @@ include_once '../_inc/_header.php';
             </div>
 
         </div>
-
-
-        <?php include_once '../_inc/_footer.php'; ?>
 
 
 

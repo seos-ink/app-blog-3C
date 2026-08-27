@@ -310,10 +310,7 @@ include_once '../_inc/_header.php';
                     </a>
                 </div>
 
-            </div>
-
-
-            <?php include_once '../_inc/_footer.php'; ?>
+            </div>  
 
 
 

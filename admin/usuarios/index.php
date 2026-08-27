@@ -303,9 +303,6 @@ include_once '../_inc/_header.php';
             </div>
 
 
-            <?php include_once '../_inc/_footer.php'; ?>
-
-
 
     </main>
 
