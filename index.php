@@ -1,5 +1,5 @@
-<?php 
-require_once 'conn/conect.php'; 
+<?php
+require_once 'conn/conect.php';
 
 // Buscar todos os posts ativos
 try {
@@ -16,10 +16,11 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- Meta Tags SEO -->
     <title>theAnalyser versão paia</title>
-    <meta name="description" content="Artigos, tutoriais e soluções práticas sobre desenvolvimento de sistemas e programação.">
+    <meta name="description"
+        content="Artigos, tutoriais e soluções práticas sobre desenvolvimento de sistemas e programação.">
     <meta name="robots" content="index, follow">
     <meta name="author" content="DevBlog">
 
@@ -44,6 +45,7 @@ try {
             border: 1px solid #e2e8f0;
             transition: all 0.25s ease-in-out;
         }
+
         .card-blog:hover {
             transform: translateY(-4px);
             border-color: #068a74ff !important;
@@ -69,7 +71,7 @@ try {
     <?php include '_inc/_header.php'; ?>
 
     <main id="main-content">
-        
+
         <!-- BANNER HERO DE DESTAQUE -->
         <section class="py-5 hero-banner text-white border-bottom border-primary mb-4 shadow-sm">
             <div class="container py-2">
@@ -82,7 +84,9 @@ try {
                             Aba da Comunidade
                         </h1>
                         <p class="lead text-light opacity-75 mb- col-lg-11">
-                            Bem-vindo a nossa comunidade! Aqui nesse fórum, você pode compartilhar suas ideias, discutir tópicos relevantes e interagir com outros membros. Participe das conversas, faça perguntas e contribua para o crescimento da nossa comunidade.
+                            Bem-vindo a nossa comunidade! Aqui nesse fórum, você pode compartilhar suas ideias, discutir
+                            tópicos relevantes e interagir com outros membros. Participe das conversas, faça perguntas e
+                            contribua para o crescimento da nossa comunidade.
                         </p>
                         <a href="#artigos" class="btn btn-primary btn-lg rounded-pill px-4 shadow-sm fw-semibold">
                             Explorar Artigos <i class="bi bi-arrow-down-short fs-5"></i>
@@ -95,11 +99,12 @@ try {
         <!-- ÁREA PRINCIPAL DE ARTIGOS + SIDEBAR -->
         <section class="container mb-5" id="artigos">
             <div class="row g-4">
-                
+
                 <!-- Feed Principal -->
                 <div class="col-lg-8">
-                    
-                    <div class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom border-2 border-primary-subtle">
+
+                    <div
+                        class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom border-2 border-primary-subtle">
                         <h2 class="h5 fw-bold text-dark m-0 d-flex align-items-center gap-2">
                             <i class="bi bi-journals text-primary"></i> Últimas Publicações
                         </h2>
@@ -111,26 +116,26 @@ try {
                             <?php foreach ($blogs as $blog): ?>
                                 <div class="col-12 col-md-6">
                                     <article class="card card-blog h-100 bg-white shadow-sm rounded-4 overflow-hidden">
-                                        
+
                                         <!-- VALIDAÇÃO E EXIBIÇÃO DA IMAGEM DO BLOG -->
-                                        <?php 
-                                            // Concatena o diretório relativo com o nome do arquivo no banco
-                                            $imagePath = 'uploads/images/blogs/' . $blog['image'];
-                                            
-                                            // Exibe a imagem APENAS se o campo não for vazio E o arquivo existir fisicamente
-                                            if (!empty($blog['image']) && file_exists($imagePath)): 
-                                        ?>
+                                        <?php
+                                        // Concatena o diretório relativo com o nome do arquivo no banco
+                                        $imagePath = $blog['image'];
+
+                                        // Exibe a imagem APENAS se o campo não for vazio E o arquivo existir fisicamente
+                                        if (!empty($blog['image'])):
+                                            ?>
                                             <a href="blog.php?blog=<?= urlencode($blog['slug']) ?>" class="d-block overflow-hidden">
-                                                <img src="<?= htmlspecialchars($imagePath) ?>" 
-                                                     class="card-img-top blog-img" 
-                                                     alt="<?= htmlspecialchars($blog['title']) ?>">
+                                                <img src="<?= htmlspecialchars($imagePath) ?>" class="card-img-top blog-img"
+                                                    alt="<?= htmlspecialchars($blog['title']) ?>">
                                             </a>
                                         <?php endif; ?>
 
                                         <div class="card-body d-flex flex-column p-4">
-                                            
+
                                             <h3 class="card-title h6 fw-bold mb-2">
-                                                <a href="blog.php?blog=<?= urlencode($blog['slug']) ?>" class="text-decoration-none text-dark hover-primary">
+                                                <a href="blog.php?blog=<?= urlencode($blog['slug']) ?>"
+                                                    class="text-decoration-none text-dark hover-primary">
                                                     <?= htmlspecialchars($blog['title']) ?>
                                                 </a>
                                             </h3>
@@ -141,15 +146,25 @@ try {
                                                 </p>
                                             <?php endif; ?>
 
+                                            <h3 class="badge bg-primary-subtle text-primary border border-primary-subtle h6 mb-2" style="align-items: normal !important;">
+                                                <a href="blog.php?blog=<?= urlencode($blog['slug']) ?>"
+                                                    class="text-decoration-none text-dark hover-primary">
+                                                    Criado por <?= htmlspecialchars($blog['criador']) ?>
+                                                </a>
+                                            </h3>
+
                                             <p class="card-text text-secondary small flex-grow-1 mb-3">
                                                 <?= htmlspecialchars(mb_strimwidth($blog['description'], 0, 110, '...')) ?>
                                             </p>
 
-                                            <div class="pt-3 mt-auto border-top d-flex align-items-center justify-content-between">
-                                                <a href="blog.php?blog=<?= urlencode($blog['slug']) ?>" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-semibold">
+                                            <div
+                                                class="pt-3 mt-auto border-top d-flex align-items-center justify-content-between">
+                                                <a href="blog.php?blog=<?= urlencode($blog['slug']) ?>"
+                                                    class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-semibold">
                                                     Ler post <i class="bi bi-arrow-right ms-1"></i>
                                                 </a>
                                             </div>
+
 
                                         </div>
                                     </article>
@@ -169,7 +184,7 @@ try {
                 <!-- Barra Lateral (Sidebar) -->
                 <aside class="col-lg-4" aria-label="Barra Lateral">
                     <div class="sticky-top" style="top: 2rem;">
-                        
+
                         <!-- Widget de Pesquisa -->
                         <div class="card border-0 bg-white shadow-sm rounded-4 mb-4">
                             <div class="card-body p-4">
@@ -178,7 +193,8 @@ try {
                                 </h3>
                                 <form action="busca.php" method="GET" role="search">
                                     <div class="input-group">
-                                        <input type="search" name="q" class="form-control bg-light border-0" placeholder="Ex: PHP, SQL, APIs..." aria-label="Buscar" required>
+                                        <input type="search" name="q" class="form-control bg-light border-0"
+                                            placeholder="Ex: PHP, SQL, APIs..." aria-label="Buscar" required>
                                         <button class="btn btn-primary px-3" type="submit">
                                             <i class="bi bi-search"></i>
                                         </button>
@@ -194,11 +210,21 @@ try {
                                     <i class="bi bi-tags text-primary me-2"></i>Tópicos Populares
                                 </h3>
                                 <div class="d-flex flex-wrap gap-2">
-                                    <a href="#" class="badge bg-primary-subtle text-primary border border-primary-subtle text-decoration-none px-3 py-2 rounded-pill">Backend PHP</a>
-                                    <a href="#" class="badge bg-primary-subtle text-primary border border-primary-subtle text-decoration-none px-3 py-2 rounded-pill">Bancos de Dados</a>
-                                    <a href="#" class="badge bg-primary-subtle text-primary border border-primary-subtle text-decoration-none px-3 py-2 rounded-pill">Arquitetura MVC</a>
-                                    <a href="#" class="badge bg-primary-subtle text-primary border border-primary-subtle text-decoration-none px-3 py-2 rounded-pill">APIs RESTful</a>
-                                    <a href="#" class="badge bg-primary-subtle text-primary border border-primary-subtle text-decoration-none px-3 py-2 rounded-pill">Clean Code</a>
+                                    <a href="#"
+                                        class="badge bg-primary-subtle text-primary border border-primary-subtle text-decoration-none px-3 py-2 rounded-pill">Backend
+                                        PHP</a>
+                                    <a href="#"
+                                        class="badge bg-primary-subtle text-primary border border-primary-subtle text-decoration-none px-3 py-2 rounded-pill">Bancos
+                                        de Dados</a>
+                                    <a href="#"
+                                        class="badge bg-primary-subtle text-primary border border-primary-subtle text-decoration-none px-3 py-2 rounded-pill">Arquitetura
+                                        MVC</a>
+                                    <a href="#"
+                                        class="badge bg-primary-subtle text-primary border border-primary-subtle text-decoration-none px-3 py-2 rounded-pill">APIs
+                                        RESTful</a>
+                                    <a href="#"
+                                        class="badge bg-primary-subtle text-primary border border-primary-subtle text-decoration-none px-3 py-2 rounded-pill">Clean
+                                        Code</a>
                                 </div>
                             </div>
                         </div>
@@ -209,7 +235,7 @@ try {
             </div>
         </section>
 
-        
+
         <!-- <section class="py-5 newsletter-section text-white border-top mt-auto">
             <div class="container">
                 <div class="row justify-content-center text-center">

@@ -146,7 +146,7 @@ try {
                                 $imagePath = $product['image'];
                                 if (!empty($product['image']) ):
                                     ?>
-                                    <a href="blog.php?blog=<?= urlencode($product['slug']) ?>" class="d-block overflow-hidden">
+                                    <a href="produto.php?blog=<?= urlencode($product['slug']) ?>" class="d-block overflow-hidden">
                                         <img src="<?= htmlspecialchars($imagePath) ?>" class="card-img-top blog-img"
                                             alt="<?= htmlspecialchars($product['title']) ?>">
                                     </a>
