@@ -46,8 +46,8 @@ try {
         }
         .card-blog:hover {
             transform: translateY(-4px);
-            border-color: #0d6efd !important;
-            box-shadow: 0 12px 24px rgba(13, 110, 253, 0.12) !important;
+            border-color: #068a74ff !important;
+            box-shadow: 0 12px 24px rgba(2, 143, 131, 0.12) !important;
         }
 
         /* Formatação de imagem recortada proporcionalmente */
@@ -66,7 +66,7 @@ try {
 
 <body class="text-dark d-flex flex-column min-vh-100">
 
-    <?php include 'admin/_inc/_headerIndex.php'; ?>
+    <?php include '_inc/_header.php'; ?>
 
     <main id="main-content">
         
@@ -79,10 +79,10 @@ try {
                             <i class="bi bi-controller me-1"></i>theAnalyser
                         </span>
                         <h1 class="display-5 fw-bold mb-3 text-white">
-                            Desenvolvimento de Sistemas & Algoritmos
+                            Aba da Comunidade
                         </h1>
-                        <p class="lead text-light opacity-75 mb-4 col-lg-11">
-                            Artigos práticos, padrões de projeto, bancos de dados e engenharia de software para impulsionar suas habilidades.
+                        <p class="lead text-light opacity-75 mb- col-lg-11">
+                            Bem-vindo a nossa comunidade! Aqui nesse fórum, você pode compartilhar suas ideias, discutir tópicos relevantes e interagir com outros membros. Participe das conversas, faça perguntas e contribua para o crescimento da nossa comunidade.
                         </p>
                         <a href="#artigos" class="btn btn-primary btn-lg rounded-pill px-4 shadow-sm fw-semibold">
                             Explorar Artigos <i class="bi bi-arrow-down-short fs-5"></i>
