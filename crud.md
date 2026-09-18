@@ -13,14 +13,14 @@ CREATE TABLE `products` (
 ```
 
 ----
-PROJETO NO VISUAL STUDIO CODE
+### PROJETO NO VISUAL STUDIO CODE
 
 2. connect.php
 
 ```
 <?php
 
-$host = 'localhost';\
+$host = 'localhost';
 $user = 'root';
 $password = '';
 $database = 'crud3c';
@@ -60,7 +60,6 @@ try {
 ----------------------- 
 
 4. form.php
-*******
 
 ```
 <!DOCTYPE html>
@@ -185,4 +184,50 @@ if($stmt->execute()) {
 }
 
 echo '<br><br> <a href="index.php">Voltar</a>';
+```
+
+---
+9. select.php
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<?php
+    include_once 'connect.php';
+?>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Título</th>
+        <th>Descrição</th>
+        <th> Editar </th>
+        <th> Deletar </th>
+    </tr>
+    <?php
+        $sql = "SELECT * FROM products";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($products as $product) {
+          ?>
+              <tr>
+                <td><?php echo $product['id']; ?></td>
+                <td><?php echo $product['title']; ?></td>
+                <td><?php echo $product['description']; ?></td>
+                <td><a href="#">Editar</a></td>
+                <td><a href="#">Deletar</a></td>
+              </tr>  
+          <?php
+        }
+    ?>
+</table>    
+</body>
+</html>
 ```
