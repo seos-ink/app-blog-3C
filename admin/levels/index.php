@@ -7,7 +7,7 @@ if (!isset($_SESSION['email'])) {
 require_once '../../conn/conect.php';
 
 try {
-    $sql = "SELECT * FROM level_users ORDER BY name ASC";
+    $sql = "SELECT * FROM level_users ORDER BY level DESC";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $levels = $stmt->fetchAll(PDO::FETCH_ASSOC);
