@@ -38,6 +38,11 @@
                     <i class="bi bi-megaphone-fill"></i> Blogs
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="<?= $base_url; ?>admin/levels/index.php" class="nav-link">
+                    <i class="bi bi-person-vcard-fill"></i> Níveis de Acesso
+                </a>
+            </li>
         </ul>
     </nav>
 
