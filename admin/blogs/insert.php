@@ -4,7 +4,7 @@ require_once '../../conn/conect.php';
 $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
 // validação do form.php
-if (empty($post['title']) || empty($post['subtitle']) || empty($post['description']) || empty($post['image']) || empty($post['status']) || empty($post['slug']) || empty($post['criador'])) {
+if (empty($post['title']) || empty($post['subtitle']) || empty($post['description']) || empty($post['image']) || empty($post['status']) || empty($post['slug']) || empty($post['criador']) || empty($post['id_categories_blog'])) {
 	header('Location: form.php?errornull=true');
 	exit();
 }

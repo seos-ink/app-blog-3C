@@ -10,7 +10,12 @@ try {
     $sql = "SELECT B.*, L.name AS criador
         FROM blogs AS B
         INNER JOIN users AS L ON B.criador = L.id
-        ORDER BY B.title DESC";
+        ORDER BY B.title DESC;
+
+        SELECT A.*, C.name AS categoria
+        FROM blogs AS A
+        INNER JOIN categories AS C ON A.categoria = C.id
+        ORDER BY A.nome DESC;";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
@@ -230,6 +235,7 @@ include_once '../_inc/_header.php';
                                     <th class="ps-4" style="width: 40%">TÍTULO / SUBTÍTULO</th>
                                     <th style="width: 25%">SLUG</th>
                                     <th style="width: 15%">AUTOR</th>
+                                    <th style="width: 15%">TÓPICOS</th>
                                     <th style="width: 15%">STATUS</th>
                                     <th class="text-end pe-4" style="width: 20%">AÇÕES</th>
                                 </tr>
@@ -269,6 +275,12 @@ include_once '../_inc/_header.php';
                                                 <span
                                                     class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 text-capitalize">
                                                     <?= htmlspecialchars($blog['criador']); ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 text-capitalize">
+                                                    <?= htmlspecialchars($blog['categories']); ?>
                                                 </span>
                                             </td>
                                             <td>

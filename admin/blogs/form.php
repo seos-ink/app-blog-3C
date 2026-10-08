@@ -261,7 +261,20 @@ require_once '../../conn/conect.php';
                                     }
                                     ?>
                                 </select>
+                            </div>
 
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold small text-muted text-uppercase">Tópico *</label>
+
+                                <select name="id_categories_blog" class="form-select form-control-flat">
+                                    <?php
+                                    $stmt = $pdo->prepare("Select * from categories");
+                                    $stmt->execute();
+                                    foreach ($stmt as $row) {
+                                        echo '<option value="' . $row['id'] . '">' . $row['nome'] . '</option>';
+                                    }
+                                    ?>
+                                </select>
                             </div>
 
                             <div class="col-md-4">
@@ -276,7 +289,6 @@ require_once '../../conn/conect.php';
                                     }
                                     ?>
                                 </select>
-
                             </div>
 
                             <div class="col-md-6"

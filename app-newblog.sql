@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01/10/2026 às 18:09
+-- Tempo de geração: 08/10/2026 às 18:22
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -35,16 +35,34 @@ CREATE TABLE `blogs` (
   `image` blob NOT NULL,
   `status` int(11) NOT NULL,
   `slug` varchar(255) NOT NULL,
-  `criador` int(11) NOT NULL
+  `criador` int(11) NOT NULL,
+  `id_categories_blog` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `blogs`
+-- Despejando dados para a tabela `categories`
 --
 
-INSERT INTO `blogs` (`id`, `title`, `subtitle`, `description`, `image`, `status`, `slug`, `criador`) VALUES
-(1, 'Melhor jogo', 'qual o melhor jogo?', 'aaaaaaaaaaaaaaaaaaaaa', 0x68747470733a2f2f6769746875622e636f6d2f73656f732d696e6b2f746865416e616c797365722f626c6f622f6d61737465722f696d672f6665375f626c617a696e67626c6164652e6769663f7261773d74727565, 1, 'melhor-jogo-da-face-da-terra', 15),
-(2, 'Campeonato de luta', 'Alguém topa?', 'Eu e um primo meu estamos planejando fazer um campeonatinho de Street Fighter Alpha 3 em casa, já que comprei um arcade recentemente. Alguém topa aí fazer?', 0x68747470733a2f2f656e637279707465642d74626e302e677374617469632e636f6d2f696d616765733f713d74626e3a414e6439476353744470384c374a7939594a736c686e57315f6b746246685457416c617157577a5664717779576850627063626d72615154596f5a38365f4f3441354f7041614e4f4a385330736c4167316d6d45774a685539414335584973557253304458496e7a7a6f5344655f5259467726733d3130, 1, 'campeonato-de-luta', 16);
+INSERT INTO `categories` (`id`, `nome`) VALUES
+(1, 'Jogos'),
+(2, 'Literatura'),
+(3, 'Filmes'),
+(4, 'Exclusivo'),
+(5, 'Tópico de Discussão'),
+(6, 'Mangás e Animes'),
+(7, 'Programação'),
+(8, 'Feedback');
 
 -- --------------------------------------------------------
 
@@ -66,7 +84,8 @@ INSERT INTO `level_users` (`id`, `name`, `level`) VALUES
 (1, 'Administrador', 20),
 (2, 'Super-administrador', 50),
 (3, 'Editor', 15),
-(4, 'Usuário', 1);
+(4, 'Usuário', 1),
+(5, 'Usuário Banido', 0);
 
 -- --------------------------------------------------------
 
@@ -171,7 +190,14 @@ INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `slug`, `image`
 ALTER TABLE `blogs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_criador` (`criador`),
-  ADD KEY `fk_status_blog` (`status`);
+  ADD KEY `fk_status_blog` (`status`),
+  ADD KEY `fk_categoria_blog` (`id_categories_blog`);
+
+--
+-- Índices de tabela `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices de tabela `level_users`
@@ -213,13 +239,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `blogs`
 --
 ALTER TABLE `blogs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `level_users`
 --
 ALTER TABLE `level_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `products`
@@ -253,6 +285,7 @@ ALTER TABLE `users`
 -- Restrições para tabelas `blogs`
 --
 ALTER TABLE `blogs`
+  ADD CONSTRAINT `fk_categoria_blog` FOREIGN KEY (`id_categories_blog`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_criador` FOREIGN KEY (`criador`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_status_blog` FOREIGN KEY (`status`) REFERENCES `status_blogs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
