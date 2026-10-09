@@ -7,15 +7,14 @@ if (!isset($_SESSION['email'])) {
 require_once '../../conn/conect.php';
 
 try {
-    $sql = "SELECT B.*, L.name AS criador
-        FROM blogs AS B
-        INNER JOIN users AS L ON B.criador = L.id
-        ORDER BY B.title DESC;
+    $sql = "SELECT B.*, U.name AS criador, C.nome AS categoria
+            FROM blogs AS B 
+            INNER JOIN users AS U
+                ON B.criador = U.id
 
-        SELECT A.*, C.name AS categoria
-        FROM blogs AS A
-        INNER JOIN categories AS C ON A.categoria = C.id
-        ORDER BY A.nome DESC;";
+            LEFT JOIN categories AS C
+                ON B.id_categories_blog = C.id
+            ORDER BY B.title DESC";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
@@ -280,7 +279,7 @@ include_once '../_inc/_header.php';
                                             <td>
                                                 <span
                                                     class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 text-capitalize">
-                                                    <?= htmlspecialchars($blog['categories']); ?>
+                                                    <?= htmlspecialchars($blog['categoria'] ?? 'Sem categoria'); ?>
                                                 </span>
                                             </td>
                                             <td>

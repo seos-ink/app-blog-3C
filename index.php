@@ -3,7 +3,15 @@ require_once 'conn/conect.php';
 
 // Buscar todos os posts ativos
 try {
-    $stmt = $pdo->prepare("SELECT * FROM blogs WHERE status = 1 ORDER BY id DESC");
+    $stmt = $pdo->prepare("SELECT B.*, U.name AS criador, C.nome AS categoria
+            FROM blogs AS B 
+            INNER JOIN users AS U
+                ON B.criador = U.id
+
+            LEFT JOIN categories AS C
+                ON B.id_categories_blog = C.id
+            ORDER BY B.title DESC
+    ");
     $stmt->execute();
     $blogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -146,12 +154,23 @@ try {
                                                 </p>
                                             <?php endif; ?>
 
-                                            <h3 class="badge bg-primary-subtle text-primary border border-primary-subtle h6 mb-2" style="align-items: normal !important;">
-                                                <a href="blog.php?blog=<?= urlencode($blog['slug']) ?>"
-                                                    class="text-decoration-none text-dark hover-primary">
-                                                    Criado por <?= htmlspecialchars($blog['criador']) ?>
-                                                </a>
-                                            </h3>
+                                            <div class="mb-2">
+                                                <h3 class="badge bg-primary-subtle text-primary border border-primary-subtle"
+                                                    style="align-items: normal !important; width: fit-content;">
+                                                    <a href="blog.php?blog=<?= urlencode($blog['slug']) ?>"
+                                                        class="text-decoration-none hover-primary">
+                                                        Criado por <?= htmlspecialchars($blog['criador']) ?>
+                                                    </a>
+                                                </h3>
+
+                                                <h3 class="badge bg-primary-subtle text-primary border border-primary-subtle"
+                                                    style="align-items: normal !important; width: fit-content;">
+                                                    <a href="blog.php?blog=<?= urlencode($blog['slug']) ?>"
+                                                        class="text-decoration-none text-dark hover-primary">
+                                                        <?= htmlspecialchars($blog['categoria']) ?>
+                                                    </a>
+                                                </h3>
+                                            </div>
 
                                             <p class="card-text text-secondary small flex-grow-1 mb-3">
                                                 <?= htmlspecialchars(mb_strimwidth($blog['description'], 0, 110, '...')) ?>
