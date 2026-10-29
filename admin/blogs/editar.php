@@ -7,8 +7,7 @@ $mensagem = "";
 $produto = null;
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $id = (int)$_GET['id'];
-    
+    $id = (int)$_GET['id'];    
     $stmt = $pdo->prepare("SELECT * FROM products WHERE id = :id");
     $stmt->execute([':id' => $id]);
     $produto = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -21,8 +20,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-    
+    $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);    
     if (empty($post['nome']) || empty($post['preco'])) {
         $mensagem = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Por favor, preencha o Nome e o Preço.</div>";
     } else {

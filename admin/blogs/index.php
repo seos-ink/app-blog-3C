@@ -23,6 +23,14 @@ try {
     die("Erro na consulta: " . $e->getMessage());
 }
 
+if (
+    !isset($_SESSION['usuariid']) ||
+    $_SESSION['nivel_acesso'] < 3
+) {
+    http_response_code(403);
+    exit("Acesso negado.");
+}
+
 
 include_once '../_inc/_header.php';
 ?>

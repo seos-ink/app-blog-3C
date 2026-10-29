@@ -10,7 +10,7 @@ try {
     $sql = "SELECT U.*, L.name AS level_name 
             FROM users AS U 
             INNER JOIN level_users AS L ON U.id_level_users = L.id 
-            ORDER BY U.name ASC";
+            ORDER BY U.id_level_users ASC";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -275,7 +275,7 @@ include_once '../_inc/_header.php';
                                     </td>
                                     <td class="text-end pe-4">
                                         <div class="btn-group shadow-sm">
-                                            <a href="form_update.php?id=<?= $user['id']; ?>"
+                                            <a href="editar.php?id=<?= $user['id']; ?>"
                                                 class="btn btn-white btn-sm border" title="Editar">
                                                 <i class="bi bi-pencil-square"></i> Editar
                                             </a>
